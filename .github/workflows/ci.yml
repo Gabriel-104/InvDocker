@@ -27,7 +27,7 @@ jobs:
         run: python manage.py check
 
       - name: Log in to GitHub Container Registry
-        uses: podman/login-action@v4
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -57,7 +57,7 @@ jobs:
         run: podman info
 
       - name: Log in to GitHub Container Registry
-        uses: podman/login-action@v4
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
