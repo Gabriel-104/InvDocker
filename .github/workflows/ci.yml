@@ -41,7 +41,7 @@ jobs:
 
   deploy:
     needs: test
-    runs-on: [self-hosted, portfolio-deploy]
+    runs-on: [self-hosted]
     permissions:
       contents: read
       packages: read
