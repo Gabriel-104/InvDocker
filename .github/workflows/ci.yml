@@ -34,10 +34,10 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build podman image
-        run: podman build -t ghcr.io/gabriel-104/InvDocker:latest -f Containerfile .
+        run: podman build -t ghcr.io/gabriel-104/invdocker:latest -f Containerfile .
 
       - name: Push podman image
-        run: podman push ghcr.io/gabriel-104/InvDocker:latest
+        run: podman push ghcr.io/gabriel-104/invdocker:latest
 
   deploy:
     needs: test
@@ -69,12 +69,12 @@ jobs:
       - name: Pull image on Windows
         if: runner.os == 'Windows'
         shell: powershell -NoProfile -ExecutionPolicy Bypass -File {0}
-        run: podman pull --platform linux/amd64 ghcr.io/gabriel-104/InvDocker:latest
+        run: podman pull --platform linux/amd64 ghcr.io/gabriel-104/invdocker:latest
 
       - name: Pull image on macOS
         if: runner.os == 'macOS'
         shell: bash
-        run: podman pull --platform linux/amd64 ghcr.io/gabriel-104/InvDocker:latest
+        run: podman pull --platform linux/amd64 ghcr.io/gabriel-104/invdocker:latest
 
       - name: Deploy on Windows
         if: runner.os == 'Windows'
@@ -90,7 +90,7 @@ jobs:
             if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           }
 
-          podman run -d --platform linux/amd64 --name portfolio-app -p 127.0.0.1:8000:8000 -e "GEMINI_API_KEY=$env:GEMINI_API_KEY" ghcr.io/gabriel-104/InvDocker:latest
+          podman run -d --platform linux/amd64 --name portfolio-app -p 127.0.0.1:8000:8000 -e "GEMINI_API_KEY=$env:GEMINI_API_KEY" ghcr.io/gabriel-104/invdocker:latest
           exit $LASTEXITCODE
 
       - name: Deploy on macOS
@@ -104,4 +104,4 @@ jobs:
             podman rm -f portfolio-app
           fi
 
-          podman run -d --platform linux/amd64 --name portfolio-app -p 127.0.0.1:8000:8000 -e GEMINI_API_KEY ghcr.io/gabriel-104/InvDocker:latest
+          podman run -d --platform linux/amd64 --name portfolio-app -p 127.0.0.1:8000:8000 -e GEMINI_API_KEY ghcr.io/gabriel-104/invdocker:latest
